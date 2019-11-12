@@ -4,13 +4,19 @@ Ruby CLI program that implements a Toy Robot on a 5x5 tabletop.
 
 ## Requirements
 
-TODO
+- `ruby` (tested using 2.6.5)
 
 ## Setup
 
 TODO if any.
 
 ## Testing
+
+### Unit Tests
+
+TODO
+
+### Integration Tests
 
 TODO
 
@@ -43,12 +49,6 @@ advise the robot if a move is possible.
 This will contain the logic for accepting commands from the CLI and relaying
 them to either the robot or tabletop. It will also need to check if the
 commands are correct.
-
-## TODO
-
-1. Create a way of representing the tabletop.
-2. Create a way of representing the robot.
-3. Create a way of controlling it via CLI.
 
 ## THINGS TO CONSIDER
 
