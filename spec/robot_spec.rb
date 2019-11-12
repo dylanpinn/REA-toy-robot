@@ -3,9 +3,12 @@
 require 'robot'
 
 RSpec.describe Robot do
-  subject { described_class.new }
+  subject(:robot) { described_class.new }
 
-  it 'has a direction'
+  it 'has a direction' do
+    expect(robot).to respond_to(:direction)
+  end
+
   it 'has a board'
 
   describe '#move' do
