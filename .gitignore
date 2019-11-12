@@ -56,3 +56,6 @@ build-iPhoneSimulator/
 .rvmrc
 
 # End of https://www.gitignore.io/api/ruby
+
+# Local vim configuration
+.lvimrc
