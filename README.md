@@ -1,6 +1,18 @@
 # Toy Robot
 
-JavaScript CLI program that implements a Toy Robot on a 5x5 tabletop.
+Ruby CLI program that implements a Toy Robot on a 5x5 tabletop.
+
+## Requirements
+
+TODO
+
+## Setup
+
+TODO if any.
+
+## Testing
+
+TODO
 
 ## Implementation Notes
 
