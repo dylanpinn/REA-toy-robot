@@ -14,7 +14,11 @@ TODO if any.
 
 ### Unit Tests
 
-TODO
+These can be run by running:
+
+```bash
+bundle exec rake
+```
 
 ### Integration Tests
 
