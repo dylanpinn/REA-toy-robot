@@ -1,5 +1,11 @@
 # Toy Robot
 
+JavaScript CLI program that implements a Toy Robot on a 5x5 tabletop.
+
+## Implementation Notes
+
+TODO
+
 ## TODO
 
 1. Create a way of representing the tabletop.
@@ -11,8 +17,3 @@
 1. Has the robot been placed on the board?
 2. Is the move valid? Robot not going to fall off the board.
 3. Run test cases from CLI (pipe a txt command file).
-
-## OPTIONS
-
-1. Ruby CLI
-2. JavaScript CLI
