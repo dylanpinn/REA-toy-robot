@@ -34,11 +34,20 @@ RSpec.describe CLIDriver do
   end
 
   context 'when a robot has been placed on the tabletop' do
+    before do
+      driver.parse('PLACE 0,0,NORTH')
+    end
+
+    let(:tabletop) { Tabletop.new }
+    let(:robot) { Robot.new }
+
     it 'handles PLACE commands'
     it 'handles MOVE commands'
     it 'handles LEFT commands'
     it 'handles RIGHT commands'
-    it 'handles REPORT commands'
+    it 'handles REPORT commands' do
+      expect(driver.parse('REPORT')).to eq('1,0,NORTH')
+    end
   end
 
   it 'ignores invalid PLACE commands'

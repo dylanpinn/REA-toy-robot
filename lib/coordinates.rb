@@ -16,4 +16,8 @@ class Coordinates
 
     true
   end
+
+  def to_s
+    "#{@x_coordinate},#{y_coordinate}"
+  end
 end
