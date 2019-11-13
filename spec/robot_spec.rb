@@ -34,4 +34,8 @@ RSpec.describe Robot do
   describe '#report' do
     it 'reports the location and direction of the robot'
   end
+
+  describe '#set_direction' do
+    it 'sets the initial direction for the robot'
+  end
 end
