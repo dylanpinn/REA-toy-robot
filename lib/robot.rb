@@ -15,6 +15,10 @@ class Robot
   end
 
   def report
-    "#{position},#{direction}"
+    "#{position},#{direction}" if placed?
+  end
+
+  def placed?
+    !tabletop.nil?
   end
 end
