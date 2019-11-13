@@ -26,7 +26,7 @@ RSpec.describe Tabletop do
       end
 
       it 'places the robot in the correct position' do
-        coordinates = Coordinates.new(1, 2)
+        coordinates = Coordinates.new(4, 4)
         tabletop.place(robot, coordinates)
         expect(tabletop.robot_coordinates).to be(coordinates)
       end
@@ -37,8 +37,24 @@ RSpec.describe Tabletop do
 
     context 'when invalid placement' do
       it 'ignores the command' do
-        tabletop.place(robot, Coordinates.new(-1, 0))
+        tabletop.place(robot, Coordinates.new(6, 8))
         expect(tabletop.robot).to be_nil
+      end
+
+      it 'is invalid when negative x value' do
+        expect(tabletop.place(robot, Coordinates.new(-1, 2))).to be(false)
+      end
+
+      it 'is invalid when negative y value' do
+        expect(tabletop.place(robot, Coordinates.new(1, -2))).to be(false)
+      end
+
+      it 'is invalid when incorrect x value' do
+        expect(tabletop.place(robot, Coordinates.new(5, 4))).to be(false)
+      end
+
+      it 'is invalid when incorrect y value' do
+        expect(tabletop.place(robot, Coordinates.new(4, 5))).to be(false)
       end
     end
   end

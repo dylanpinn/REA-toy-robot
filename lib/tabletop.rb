@@ -15,7 +15,7 @@ class Tabletop
 
   # @param coordinates Array containing x,y coordinates.
   def place(robot, coordinates)
-    return unless valid_placement?(coordinates)
+    return false unless valid_placement?(coordinates)
 
     @robot = robot
     @robot_coordinates = coordinates
