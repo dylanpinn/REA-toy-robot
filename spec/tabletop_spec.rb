@@ -2,6 +2,7 @@
 
 require 'tabletop'
 require 'robot'
+require 'coordinates'
 
 RSpec.describe Tabletop do
   subject(:tabletop) { described_class.new }
@@ -57,9 +58,5 @@ RSpec.describe Tabletop do
         expect(tabletop.place(robot, Coordinates.new(4, 5))).to be(false)
       end
     end
-  end
-
-  describe '#valid_move?' do
-    it 'checks if a move is valid'
   end
 end
