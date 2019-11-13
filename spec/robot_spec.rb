@@ -7,6 +7,8 @@ require 'coordinates'
 RSpec.describe Robot do
   subject(:robot) { described_class.new }
 
+  let(:tabletop) { Tabletop.new }
+
   it 'has a direction' do
     expect(robot).to respond_to(:direction)
   end
@@ -16,8 +18,6 @@ RSpec.describe Robot do
   end
 
   describe '#place' do
-    let(:tabletop) { Tabletop.new }
-
     context 'when valid placement' do
       it 'places the robot on the board' do
         robot.place(tabletop, Coordinates.new(0, 0), 'NORTH')
@@ -55,17 +55,35 @@ RSpec.describe Robot do
     context 'when move is invalid' do
       it 'ignores the command'
     end
+
+    context 'when robot has not been placed' do
+      it 'ignores the command'
+    end
   end
 
   describe '#left' do
     it 'rotates the robot 90 degrees left'
+    context 'when robot has not been placed' do
+      it 'ignores the command'
+    end
   end
 
   describe '#right' do
     it 'rotates the robot 90 degrees right'
+    context 'when robot has not been placed' do
+      it 'ignores the command'
+    end
   end
 
   describe '#report' do
-    it 'reports the location and direction of the robot'
+    it 'reports the location and direction of the robot' do
+      robot.place(tabletop, Coordinates.new(1, 2), 'SOUTH')
+
+      expect(robot.report).to eq('1,2,SOUTH')
+    end
+
+    context 'when robot has not been placed' do
+      it 'ignores the command'
+    end
   end
 end

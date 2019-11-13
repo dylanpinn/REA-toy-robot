@@ -32,6 +32,7 @@ RSpec.describe CLIDriver do
       driver.parse('PLACE 0,0,NORTH')
     end
 
+    # TODO: Change to use stubs for all dependencies.
     let(:tabletop) { Tabletop.new }
     let(:robot) { Robot.new }
 
