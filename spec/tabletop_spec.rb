@@ -31,9 +31,6 @@ RSpec.describe Tabletop do
         tabletop.place(robot, coordinates)
         expect(tabletop.robot_coordinates).to be(coordinates)
       end
-
-      # TODO: Move out into CLI operations.
-      it 'faces the robot in the correct direction'
     end
 
     context 'when invalid placement' do
