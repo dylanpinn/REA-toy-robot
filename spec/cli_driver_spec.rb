@@ -46,7 +46,7 @@ RSpec.describe CLIDriver do
     it 'handles LEFT commands'
     it 'handles RIGHT commands'
     it 'handles REPORT commands' do
-      expect(driver.parse('REPORT')).to eq('1,0,NORTH')
+      expect(driver.parse('REPORT')).to eq('0,0,NORTH')
     end
   end
 
