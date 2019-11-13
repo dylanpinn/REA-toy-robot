@@ -31,7 +31,7 @@ TODO
 This contains the logic for controlling the robot.
 
 - Move
-  - This will need to check with the tabletop if the move is valid and if so
+  - This will need to check if the move is valid and if so
     move the robot (through the tabletop).
 - Left
   - This will update the direction that the robot is facing (90 degrees left).

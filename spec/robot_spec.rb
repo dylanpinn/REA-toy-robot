@@ -35,7 +35,10 @@ RSpec.describe Robot do
     it 'reports the location and direction of the robot'
   end
 
-  describe '#set_direction' do
-    it 'sets the initial direction for the robot'
+  describe '#initial_direction' do
+    it 'sets the initial direction for the robot' do
+      robot.initial_direction('DIRECTION')
+      expect(robot.direction).to be('DIRECTION')
+    end
   end
 end
