@@ -15,15 +15,9 @@ RSpec.describe CLIDriver do
       it 'places the robot on the tabletop' do
         driver.parse('PLACE 0,0,NORTH')
 
-        expect(tabletop).to have_received(:place).with(
-          robot, instance_of(Coordinates)
+        expect(robot).to have_received(:place).with(
+          tabletop, instance_of(Coordinates), 'NORTH'
         )
-      end
-
-      it 'sets the direction on the robot' do
-        driver.parse('PLACE 0,0,NORTH')
-
-        expect(robot).to have_received(:initial_direction).with('NORTH')
       end
     end
 

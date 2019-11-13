@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'robot'
+require 'tabletop'
+require 'coordinates'
 
 RSpec.describe Robot do
   subject(:robot) { described_class.new }
@@ -9,7 +11,39 @@ RSpec.describe Robot do
     expect(robot).to respond_to(:direction)
   end
 
-  it 'has a board'
+  it 'has a tabletop' do
+    expect(robot).to respond_to(:tabletop)
+  end
+
+  describe '#place' do
+    let(:tabletop) { Tabletop.new }
+
+    context 'when valid placement' do
+      it 'places the robot on the board' do
+        robot.place(tabletop, Coordinates.new(0, 0), 'NORTH')
+        expect(robot.tabletop).not_to be_nil
+      end
+
+      it 'places the robot in the correct position' do
+        coordinates = Coordinates.new(4, 4)
+        robot.place(tabletop, coordinates, 'WEST')
+        expect(robot.position).to be(coordinates)
+      end
+
+      it 'faces the robot in the correct direction' do
+        coordinates = Coordinates.new(4, 4)
+        robot.place(tabletop, coordinates, 'SOUTH')
+        expect(robot.direction).to be('SOUTH')
+      end
+    end
+
+    context 'when invalid placement' do
+      it 'ignores the command' do
+        robot.place(tabletop, Coordinates.new(6, 8), 'EAST')
+        expect(robot.tabletop).to be_nil
+      end
+    end
+  end
 
   describe '#move' do
     it 'checks with the board to see if the move is valid'
@@ -33,12 +67,5 @@ RSpec.describe Robot do
 
   describe '#report' do
     it 'reports the location and direction of the robot'
-  end
-
-  describe '#initial_direction' do
-    it 'sets the initial direction for the robot' do
-      robot.initial_direction('DIRECTION')
-      expect(robot.direction).to be('DIRECTION')
-    end
   end
 end

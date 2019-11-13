@@ -1,4 +1,0 @@
----
-
-exclude_paths:
-  - lib/cli_driver.rb

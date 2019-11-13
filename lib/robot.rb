@@ -3,8 +3,18 @@
 # Responsible for controlling and reporting on the robot.
 class Robot
   attr_reader :direction
+  attr_reader :tabletop
+  attr_reader :position
 
-  def initial_direction(direction)
+  def place(tabletop, coordinates, direction)
+    return unless tabletop.valid_placement?(coordinates)
+
+    @tabletop = tabletop
+    @position = coordinates
     @direction = direction
+  end
+
+  def report
+    "#{position},#{direction}"
   end
 end

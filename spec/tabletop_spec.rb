@@ -17,42 +17,37 @@ RSpec.describe Tabletop do
     end
   end
 
-  describe '#place(robot)' do
-    let(:robot) { Robot.new }
-
-    context 'when valid placement' do
-      it 'places the robot on the board' do
-        tabletop.place(robot, Coordinates.new(0, 0))
-        expect(tabletop.robot).not_to be_nil
+  describe '#valid_placement?(coordinates)' do
+    context 'when valid coordinates' do
+      it 'is valid with 0 x value' do
+        coordinates = Coordinates.new(0, 2)
+        expect(tabletop.valid_placement?(coordinates)).to be(true)
       end
 
-      it 'places the robot in the correct position' do
-        coordinates = Coordinates.new(4, 4)
-        tabletop.place(robot, coordinates)
-        expect(tabletop.robot_coordinates).to be(coordinates)
-      end
+      it 'is valid with 0 y value'
+      it 'is valid when x is within width'
+      it 'is valid when y is within height'
     end
 
-    context 'when invalid placement' do
-      it 'ignores the command' do
-        tabletop.place(robot, Coordinates.new(6, 8))
-        expect(tabletop.robot).to be_nil
-      end
-
+    context 'when invalid coordinates' do
       it 'is invalid when negative x value' do
-        expect(tabletop.place(robot, Coordinates.new(-1, 2))).to be(false)
+        coordinates = Coordinates.new(-1, 2)
+        expect(tabletop.valid_placement?(coordinates)).to be(false)
       end
 
       it 'is invalid when negative y value' do
-        expect(tabletop.place(robot, Coordinates.new(1, -2))).to be(false)
+        coordinates = Coordinates.new(1, -2)
+        expect(tabletop.valid_placement?(coordinates)).to be(false)
       end
 
       it 'is invalid when incorrect x value' do
-        expect(tabletop.place(robot, Coordinates.new(5, 4))).to be(false)
+        coordinates = Coordinates.new(5, 4)
+        expect(tabletop.valid_placement?(coordinates)).to be(false)
       end
 
       it 'is invalid when incorrect y value' do
-        expect(tabletop.place(robot, Coordinates.new(4, 5))).to be(false)
+        coordinates = Coordinates.new(4, 5)
+        expect(tabletop.valid_placement?(coordinates)).to be(false)
       end
     end
   end

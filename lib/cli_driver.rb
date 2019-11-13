@@ -23,10 +23,10 @@ class CLIDriver
     # TODO: Check if valid direction.
     commands = strip_coordinates(command)
     coordinates = Coordinates.new(commands[0].to_i, commands[1].to_i)
-    @robot.initial_direction(commands[2])
-    @tabletop.place(@robot, coordinates)
+    @robot.place(@tabletop, coordinates, commands[2])
   end
 
+  # TODO: Look at reloacting this.
   def strip_coordinates(command)
     command = command.delete_prefix('PLACE')
     command.strip!
@@ -35,6 +35,6 @@ class CLIDriver
   end
 
   def report
-    "#{@tabletop.robot_coordinates},#{@robot.direction}"
+    @robot.report
   end
 end
