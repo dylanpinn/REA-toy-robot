@@ -41,7 +41,11 @@ RSpec.describe CLIDriver do
     let(:tabletop) { Tabletop.new }
     let(:robot) { Robot.new }
 
-    it 'handles PLACE commands'
+    it 'handles PLACE commands' do
+      driver.parse('PLACE 1,1,SOUTH')
+      expect(driver.parse('REPORT')).to eq('1,1,SOUTH')
+    end
+
     it 'handles MOVE commands'
     it 'handles LEFT commands'
     it 'handles RIGHT commands'
