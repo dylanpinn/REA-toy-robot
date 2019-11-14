@@ -70,6 +70,7 @@ RSpec.describe Robot do
     before do
       allow(tabletop).to receive(:valid_placement?).and_return(true)
       coordinates = double
+      allow(coordinates).to receive(:to_s).and_return('1,2')
       robot.place(tabletop, coordinates, 'NORTH')
     end
 
@@ -80,8 +81,8 @@ RSpec.describe Robot do
     end
 
     describe '#report' do
-      xit 'reports the location and direction of the robot' do
-        expect(robot.report).to eq('1,2,SOUTH')
+      it 'reports the location and direction of the robot' do
+        expect(robot.report).to eq('1,2,NORTH')
       end
     end
 
