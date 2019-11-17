@@ -15,7 +15,7 @@ class Robot
   end
 
   def report
-    "#{position},#{direction}" if placed?
+    "#{position},#{direction.to_s.upcase}" if placed?
   end
 
   def placed?
