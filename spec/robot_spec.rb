@@ -163,7 +163,16 @@ RSpec.describe Robot do
       end
 
       context 'when move is invalid' do
-        it 'ignores the command'
+        before do
+          valid = class_double('ValidMove')
+                  .as_stubbed_const(transfer_nested_constants: true)
+          allow(valid).to receive(:within_upper_bounds?).and_return(false)
+          allow(valid).to receive(:within_lower_bounds?).and_return(false)
+        end
+
+        it 'ignores the command' do
+          expect { robot.move }.not_to change(robot, :position)
+        end
       end
     end
   end
@@ -176,7 +185,7 @@ RSpec.describe Robot do
     end
 
     describe '#report' do
-      xit 'ignores the command' do
+      it 'ignores the command' do
         expect(robot.report).to eq(nil)
       end
     end
