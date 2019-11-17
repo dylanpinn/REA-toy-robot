@@ -3,55 +3,96 @@
 require_relative 'coordinates'
 require_relative 'direction'
 
+require 'byebug'
+
 # Driver for the application.
 class CLIDriver
+  attr_reader :robot, :tabletop
+
+  # Whitelist commands.
+  COMMANDS = {
+    place: 'place',
+    report: 'report',
+    move: 'move',
+    right: 'right',
+    left: 'left'
+  }.freeze
+
   def initialize(tabletop, robot)
     @tabletop = tabletop
     @robot = robot
   end
 
-  def parse(command)
-    # p command
-    place(command) if command.start_with?('PLACE')
-    # TODO: Ignore reset of commands if robot has not been placed.
-    p report if command == 'REPORT'
-    move if command == 'MOVE'
-    right if command == 'RIGHT'
-    left if command == 'LEFT'
+  def parse(input)
+    return if input == ''
+
+    input_array = input.downcase.split(' ')
+    command = input_array.first.downcase
+    args = input_array.drop(1)
+    begin
+      method = COMMANDS[command.to_sym]
+      send(method, args) if method
+    rescue NoMethodError
+      nil
+    end
   end
 
   private
 
-  def place(command)
-    # TODO: Check if valid coordinates.
-    # TODO: Check if valid direction.
-    commands = strip_coordinates(command)
-    coordinates = Coordinates.new(commands[0].to_i, commands[1].to_i)
-    @robot.place(@tabletop, coordinates,
-                 Object.const_get(commands[2].capitalize))
+  def place(args)
+    args = args.join.delete(' ').split(',')
+
+    return unless valid_args(args)
+
+    x_coord = args[0].to_i
+    y_coord = args[1].to_i
+
+    coordinates = Coordinates.new(x_coord, y_coord)
+    robot.place(tabletop, coordinates, direction(args[2]))
   end
 
-  # TODO: Look at reloacting this.
-  def strip_coordinates(command)
-    command = command.delete_prefix('PLACE')
-    command.strip!
-    commands = command.split(',')
-    commands
+  def valid_args(args)
+    return false if args.length != 3
+    return false unless number?(args[0])
+    return false unless number?(args[1])
+    return false unless valid_direction(args[2])
+
+    true
   end
 
-  def move
-    @robot.move
+  def direction(arg)
+    case arg
+    when 'n', 'north' then North
+    when 'e', 'east' then East
+    when 's', 'south' then South
+    when 'w', 'west' then West
+    end
   end
 
-  def right
-    @robot.right
+  def valid_direction(string)
+    /^([nesw]|(north)|(east)|(south)|(west))$/.match?(string)
   end
 
-  def left
-    @robot.left
+  def number?(string)
+    true if Float(string)
+  rescue StandardError
+    false
   end
 
-  def report
-    @robot.report
+  def move(_args)
+    robot.move
+  end
+
+  def right(_args)
+    robot.right
+  end
+
+  def left(_args)
+    robot.left
+  end
+
+  def report(_args)
+    report_output = robot.report
+    p report_output if report_output
   end
 end

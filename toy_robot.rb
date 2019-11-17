@@ -12,5 +12,5 @@ robot = Robot.new
 driver = CLIDriver.new(tabletop, robot)
 
 while (buf = Readline.readline(prompt, true))
-  driver.parse(buf.upcase)
+  driver.parse(buf.downcase)
 end

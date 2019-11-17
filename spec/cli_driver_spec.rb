@@ -4,6 +4,7 @@ require 'cli_driver'
 require 'tabletop'
 require 'coordinates'
 require 'direction'
+require 'robot'
 
 RSpec.describe CLIDriver do
   subject(:driver) { described_class.new(tabletop, robot) }

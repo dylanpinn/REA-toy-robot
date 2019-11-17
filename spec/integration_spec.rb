@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'cli_driver'
+require 'robot'
+require 'tabletop'
 
 # rubocop:disable RSpec/DescribeClass
 RSpec.describe 'Integration' do
@@ -28,6 +30,7 @@ RSpec.describe 'Integration' do
     expect { driver.parse('REPORT') }.to output(/0,0,WEST/).to_stdout
   end
 
+  # rubocop:disable RSpec/ExampleLength
   it 'returns Example c' do
     driver.parse('PLACE 1,2,EAST')
     driver.parse('MOVE')
@@ -36,5 +39,6 @@ RSpec.describe 'Integration' do
     driver.parse('MOVE')
     expect { driver.parse('REPORT') }.to output(/3,3,NORTH/).to_stdout
   end
+  # rubocop:enable RSpec/ExampleLength
 end
 # rubocop:enable RSpec/DescribeClass
