@@ -191,7 +191,9 @@ RSpec.describe Robot do
     end
 
     describe '#move' do
-      it 'ignores the command'
+      it 'ignores the command' do
+        expect { robot.move }.not_to change(robot, :position)
+      end
     end
   end
 
