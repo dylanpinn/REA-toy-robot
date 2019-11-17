@@ -104,7 +104,21 @@ RSpec.describe Robot do
       end
 
       context 'when move is valid' do
-        it 'moves forward in the direction it was facing 1 place'
+        context 'when facing NORTH' do
+          it 'moves 1 position in the y direction'
+        end
+
+        context 'when facing SOUTH' do
+          it 'moves -1 position in the y direction'
+        end
+
+        context 'when facing EAST' do
+          it 'moves 1 position in the x direction'
+        end
+
+        context 'when facing WEST' do
+          it 'moves -1 position in the x direction'
+        end
       end
 
       context 'when move is invalid' do
