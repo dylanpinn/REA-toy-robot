@@ -20,4 +20,20 @@ class Coordinates
   def to_s
     "#{@x_coordinate},#{y_coordinate}"
   end
+
+  def move_north
+    new(x_coordinate, y_coordinate + 1)
+  end
+
+  def move_south
+    new(x_coordinate, y_coordinate - 1)
+  end
+
+  def move_east
+    new(x_coordinate + 1, y_coordinate)
+  end
+
+  def move_west
+    new(x_coordinate - 1, y_coordinate)
+  end
 end

@@ -24,6 +24,7 @@ class Robot
     !tabletop.nil?
   end
 
+  # TODO: Remove conditionals
   def move
     if direction == 'NORTH'
       unless ValidMove.within_upper_bounds?(
@@ -32,21 +33,21 @@ class Robot
         return
       end
 
-      p 'NORTH'
+      @position = position.move_north
     elsif direction == 'SOUTH'
       return unless ValidMove.within_lower_bounds?(position.y_coordinate)
 
-      p 'SOUTH'
+      @position = position.move_south
     elsif direction == 'EAST'
       unless ValidMove.within_upper_bounds?(position.x_coordinate, tabletop.width)
         return
       end
 
-      p 'EAST'
+      @position = position.move_east
     elsif direction == 'WEST'
       return unless ValidMove.within_lower_bounds?(position.x_coordinate)
 
-      p 'WEST'
+      @position = position.move_west
     end
   end
 end

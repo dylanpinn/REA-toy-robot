@@ -6,6 +6,7 @@ RSpec.describe Robot do
   subject(:robot) { described_class.new }
 
   let(:tabletop) { instance_double(Tabletop) }
+  let(:coordinates) { double }
 
   it 'has a direction' do
     expect(robot).to respond_to(:direction)
@@ -17,7 +18,6 @@ RSpec.describe Robot do
 
   describe '#place' do
     it 'checks if the placement is valid' do
-      coordinates = double
       allow(tabletop).to receive(:valid_placement?)
 
       robot.place(tabletop, coordinates, 'NORTH')
@@ -27,7 +27,6 @@ RSpec.describe Robot do
 
     context 'when valid placement' do
       it 'places the robot on the board' do
-        coordinates = double
         allow(tabletop).to receive(:valid_placement?).and_return(true)
 
         robot.place(tabletop, coordinates, 'NORTH')
@@ -36,7 +35,6 @@ RSpec.describe Robot do
       end
 
       it 'places the robot in the correct position' do
-        coordinates = double
         allow(tabletop).to receive(:valid_placement?).and_return(true)
 
         robot.place(tabletop, coordinates, 'WEST')
@@ -45,7 +43,6 @@ RSpec.describe Robot do
       end
 
       it 'faces the robot in the correct direction' do
-        coordinates = double
         allow(tabletop).to receive(:valid_placement?).and_return(true)
 
         robot.place(tabletop, coordinates, 'SOUTH')
@@ -56,7 +53,6 @@ RSpec.describe Robot do
 
     context 'when invalid placement' do
       it 'ignores the command' do
-        coordinates = double
         allow(tabletop).to receive(:valid_placement?).and_return(false)
 
         robot.place(tabletop, coordinates, 'SOUTH')
@@ -71,7 +67,6 @@ RSpec.describe Robot do
       allow(tabletop).to receive(:height).and_return(5)
       allow(tabletop).to receive(:width).and_return(5)
       allow(tabletop).to receive(:valid_placement?).and_return(true)
-      coordinates = double
       allow(coordinates).to receive(:y_coordinate).and_return(2)
       allow(coordinates).to receive(:x_coordinate).and_return(1)
       allow(coordinates).to receive(:to_s).and_return('1,2')
@@ -96,28 +91,74 @@ RSpec.describe Robot do
                 .as_stubbed_const(transfer_nested_constants: true)
         allow(valid).to receive(:within_upper_bounds?)
           .with(robot.position.y_coordinate, tabletop.height).and_return(true)
+        allow(coordinates).to receive(:move_north).and_return(Coordinates.new(1, 3))
 
         robot.move
 
         expect(valid).to have_received(:within_upper_bounds?)
-          .with(robot.position.y_coordinate, tabletop.height)
+          .with(robot.position.y_coordinate - 1, tabletop.height)
       end
 
+      it 'returns a new Coordinates object' do
+        valid = class_double('ValidMove')
+                .as_stubbed_const(transfer_nested_constants: true)
+        allow(valid).to receive(:within_upper_bounds?)
+          .with(robot.position.y_coordinate, tabletop.height).and_return(true)
+        allow(coordinates).to receive(:move_north).and_return(Coordinates.new(1, 3))
+
+        expect(robot.move).to be_instance_of(Coordinates)
+      end
+
+      # Robot placed at 1,2,NORTH
       context 'when move is valid' do
+        before do
+          valid = class_double('ValidMove')
+                  .as_stubbed_const(transfer_nested_constants: true)
+          allow(valid).to receive(:within_upper_bounds?).and_return(true)
+          allow(valid).to receive(:within_lower_bounds?).and_return(true)
+        end
+
         context 'when facing NORTH' do
-          it 'moves 1 position in the y direction'
+          it 'moves 1 position in the y direction' do
+            allow(coordinates).to receive(:move_north).and_return(Coordinates.new(1, 3))
+
+            robot.move
+
+            expect(robot.position.y_coordinate).to eq(3)
+          end
         end
 
         context 'when facing SOUTH' do
-          it 'moves -1 position in the y direction'
+          it 'moves -1 position in the y direction' do
+            robot.place(tabletop, coordinates, 'SOUTH')
+            allow(coordinates).to receive(:move_south).and_return(Coordinates.new(1, 1))
+
+            robot.move
+
+            expect(robot.position.y_coordinate).to eq(1)
+          end
         end
 
         context 'when facing EAST' do
-          it 'moves 1 position in the x direction'
+          it 'moves 1 position in the x direction' do
+            robot.place(tabletop, coordinates, 'EAST')
+            allow(coordinates).to receive(:move_east).and_return(Coordinates.new(2, 2))
+
+            robot.move
+
+            expect(robot.position.x_coordinate).to eq(2)
+          end
         end
 
         context 'when facing WEST' do
-          it 'moves -1 position in the x direction'
+          it 'moves -1 position in the x direction' do
+            robot.place(tabletop, coordinates, 'WEST')
+            allow(coordinates).to receive(:move_west).and_return(Coordinates.new(0, 2))
+
+            robot.move
+
+            expect(robot.position.x_coordinate).to eq(0)
+          end
         end
       end
 
