@@ -21,5 +21,11 @@ RSpec.describe 'Integration' do
     driver.parse('RIGHT')
     expect { driver.parse('REPORT') }.to output(/0,0,EAST/).to_stdout
   end
+
+  it 'returns Example b' do
+    driver.parse('PLACE 0,0,NORTH')
+    driver.parse('LEFT')
+    expect { driver.parse('REPORT') }.to output(/0,0,WEST/).to_stdout
+  end
 end
 # rubocop:enable RSpec/DescribeClass

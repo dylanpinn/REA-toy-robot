@@ -133,6 +133,21 @@ RSpec.describe Robot do
         expect { robot.right }.to change(robot, :direction).to(new_direction)
       end
     end
+
+    describe '#left' do
+      it 'calls left on the direction' do
+        robot.left
+
+        expect(direction).to have_received(:left)
+      end
+
+      it 'changes the direction' do
+        new_direction = double
+        allow(direction).to receive(:left).and_return(new_direction)
+
+        expect { robot.left }.to change(robot, :direction).to(new_direction)
+      end
+    end
   end
 
   context 'when the robot has not been placed' do
@@ -159,12 +174,11 @@ RSpec.describe Robot do
         expect { robot.right }.not_to change(robot, :direction)
       end
     end
-  end
 
-  describe '#left' do
-    it 'rotates the robot 90 degrees left'
-    context 'when robot has not been placed' do
-      it 'ignores the command'
+    describe '#left' do
+      it 'ignores the command' do
+        expect { robot.left }.not_to change(robot, :direction)
+      end
     end
   end
 end

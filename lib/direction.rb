@@ -6,6 +6,8 @@ class Direction
   Y_MOVE = 0
 
   def self.right; end
+
+  def self.left; end
 end
 
 # Robot is facing north.
@@ -14,6 +16,10 @@ class North < Direction
 
   def self.right
     East
+  end
+
+  def self.left
+    West
   end
 end
 
@@ -24,6 +30,10 @@ class South < Direction
   def self.right
     West
   end
+
+  def self.left
+    East
+  end
 end
 
 # Robot is facing east.
@@ -33,6 +43,10 @@ class East < Direction
   def self.right
     South
   end
+
+  def self.left
+    North
+  end
 end
 
 # Robot is facing west.
@@ -41,5 +55,9 @@ class West < Direction
 
   def self.right
     North
+  end
+
+  def self.left
+    South
   end
 end
