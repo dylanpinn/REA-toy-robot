@@ -155,7 +155,9 @@ RSpec.describe Robot do
     end
 
     describe '#right' do
-      it 'ignores the command'
+      it 'ignores the command' do
+        expect { robot.right }.not_to change(robot, :direction)
+      end
     end
   end
 
