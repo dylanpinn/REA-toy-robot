@@ -38,7 +38,14 @@ RSpec.describe CLIDriver do
       end
     end
 
-    context 'when command is LEFT'
+    context 'when command is LEFT' do
+      it 'calls left on the robot' do
+        driver.parse('LEFT')
+
+        expect(robot).to have_received(:left)
+      end
+    end
+
     context 'when command is RIGHT' do
       it 'calls right on the robot' do
         driver.parse('RIGHT')

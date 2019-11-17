@@ -17,6 +17,7 @@ class CLIDriver
     p report if command == 'REPORT'
     move if command == 'MOVE'
     right if command == 'RIGHT'
+    left if command == 'LEFT'
   end
 
   private
@@ -44,6 +45,10 @@ class CLIDriver
 
   def right
     @robot.right
+  end
+
+  def left
+    @robot.left
   end
 
   def report

@@ -36,4 +36,10 @@ class Robot
 
     @direction = direction.right
   end
+
+  def left
+    return unless placed?
+
+    @direction = direction.left
+  end
 end
