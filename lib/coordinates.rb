@@ -22,6 +22,7 @@ class Coordinates
   end
 
   def move(direction)
-    new(x_coordinate + direction::X_MOVE, y_coordinate + direction::Y_MOVE)
+    self.class.new(x_coordinate + direction::X_MOVE,
+                   y_coordinate + direction::Y_MOVE)
   end
 end
