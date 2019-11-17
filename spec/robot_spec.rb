@@ -103,7 +103,6 @@ RSpec.describe Robot do
           .with(robot.position.y_coordinate, tabletop.height)
       end
 
-      # rubocop:disable RSpec/NestedGroups
       context 'when move is valid' do
         it 'moves forward in the direction it was facing 1 place'
       end
@@ -111,7 +110,6 @@ RSpec.describe Robot do
       context 'when move is invalid' do
         it 'ignores the command'
       end
-      # rubocop:enable RSpec/NestedGroups
     end
   end
 
