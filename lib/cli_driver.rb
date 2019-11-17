@@ -3,8 +3,6 @@
 require_relative 'coordinates'
 require_relative 'direction'
 
-require 'byebug'
-
 # Driver for the application.
 class CLIDriver
   attr_reader :robot, :tabletop
