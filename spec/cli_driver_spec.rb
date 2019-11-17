@@ -3,6 +3,7 @@
 require 'cli_driver'
 require 'tabletop'
 require 'coordinates'
+require 'Direction'
 
 RSpec.describe CLIDriver do
   subject(:driver) { described_class.new(tabletop, robot) }
@@ -16,7 +17,7 @@ RSpec.describe CLIDriver do
         driver.parse('PLACE 0,0,NORTH')
 
         expect(robot).to have_received(:place).with(
-          tabletop, instance_of(Coordinates), 'NORTH'
+          tabletop, instance_of(Coordinates), North
         )
       end
     end
@@ -32,20 +33,21 @@ RSpec.describe CLIDriver do
       driver.parse('PLACE 0,0,NORTH')
     end
 
-    # TODO: Change to use stubs for all dependencies.
-    let(:tabletop) { Tabletop.new }
-    let(:robot) { Robot.new }
-
     it 'handles PLACE commands' do
       driver.parse('PLACE 1,1,SOUTH')
-      expect(driver.parse('REPORT')).to eq('1,1,SOUTH')
+
+      expect(robot).to have_received(:place).with(
+        tabletop, instance_of(Coordinates), South
+      )
     end
 
     it 'handles MOVE commands'
     it 'handles LEFT commands'
     it 'handles RIGHT commands'
     it 'handles REPORT commands' do
-      expect(driver.parse('REPORT')).to eq('0,0,NORTH')
+      driver.parse('REPORT')
+
+      expect(robot).to have_received(:report)
     end
   end
 
