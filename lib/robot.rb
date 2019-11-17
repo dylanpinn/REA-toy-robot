@@ -30,4 +30,8 @@ class Robot
 
     @position = new_position
   end
+
+  def right
+    @direction = direction.right
+  end
 end

@@ -4,6 +4,8 @@
 class Direction
   X_MOVE = 0
   Y_MOVE = 0
+
+  def self.right; end
 end
 
 # Robot is facing north.
