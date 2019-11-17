@@ -30,4 +30,10 @@ class Robot
 
     @position = new_position
   end
+
+  def right
+    return unless placed?
+
+    @direction = direction.right
+  end
 end

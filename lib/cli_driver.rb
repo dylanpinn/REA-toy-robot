@@ -16,6 +16,7 @@ class CLIDriver
     # TODO: Ignore reset of commands if robot has not been placed.
     p report if command == 'REPORT'
     move if command == 'MOVE'
+    right if command == 'RIGHT'
   end
 
   private
@@ -39,6 +40,10 @@ class CLIDriver
 
   def move
     @robot.move
+  end
+
+  def right
+    @robot.right
   end
 
   def report

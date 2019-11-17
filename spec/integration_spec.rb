@@ -15,5 +15,11 @@ RSpec.describe 'Integration' do
     driver.parse('MOVE')
     expect { driver.parse('REPORT') }.to output(/0,1,NORTH/).to_stdout
   end
+
+  it 'can rotate right' do
+    driver.parse('PLACE 0,0,NORTH')
+    driver.parse('RIGHT')
+    expect { driver.parse('REPORT') }.to output(/0,0,EAST/).to_stdout
+  end
 end
 # rubocop:enable RSpec/DescribeClass
