@@ -68,8 +68,12 @@ RSpec.describe Robot do
 
   context 'when the robot has been placed' do
     before do
+      allow(tabletop).to receive(:height).and_return(5)
+      allow(tabletop).to receive(:width).and_return(5)
       allow(tabletop).to receive(:valid_placement?).and_return(true)
       coordinates = double
+      allow(coordinates).to receive(:y_coordinate).and_return(2)
+      allow(coordinates).to receive(:x_coordinate).and_return(1)
       allow(coordinates).to receive(:to_s).and_return('1,2')
       robot.place(tabletop, coordinates, 'NORTH')
     end
@@ -88,7 +92,15 @@ RSpec.describe Robot do
 
     describe '#move' do
       it 'checks with the board to see if the move is valid' do
-        # robot.move
+        valid = class_double('ValidMove')
+                .as_stubbed_const(transfer_nested_constants: true)
+        allow(valid).to receive(:within_upper_bounds?)
+          .with(robot.position.y_coordinate, tabletop.height).and_return(true)
+
+        robot.move
+
+        expect(valid).to have_received(:within_upper_bounds?)
+          .with(robot.position.y_coordinate, tabletop.height)
       end
 
       # rubocop:disable RSpec/NestedGroups
