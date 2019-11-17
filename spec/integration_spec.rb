@@ -2,6 +2,7 @@
 
 require 'cli_driver'
 
+# rubocop:disable RSpec/DescribeClass
 RSpec.describe 'Integration' do
   let(:driver) do
     robot = Robot.new
@@ -15,3 +16,4 @@ RSpec.describe 'Integration' do
     expect { driver.parse('REPORT') }.to output(/0,1,NORTH/).to_stdout
   end
 end
+# rubocop:enable RSpec/DescribeClass
