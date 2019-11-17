@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 require 'robot'
+require 'direction'
 
 RSpec.describe Robot do
   subject(:robot) { described_class.new }
 
   let(:tabletop) { instance_double(Tabletop) }
+  let(:coordinates) { double }
 
   it 'has a direction' do
     expect(robot).to respond_to(:direction)
@@ -17,49 +19,44 @@ RSpec.describe Robot do
 
   describe '#place' do
     it 'checks if the placement is valid' do
-      coordinates = double
       allow(tabletop).to receive(:valid_placement?)
 
-      robot.place(tabletop, coordinates, 'NORTH')
+      robot.place(tabletop, coordinates, North)
 
       expect(tabletop).to have_received(:valid_placement?).with(coordinates)
     end
 
     context 'when valid placement' do
       it 'places the robot on the board' do
-        coordinates = double
         allow(tabletop).to receive(:valid_placement?).and_return(true)
 
-        robot.place(tabletop, coordinates, 'NORTH')
+        robot.place(tabletop, coordinates, North)
 
         expect(robot.tabletop).not_to be_nil
       end
 
       it 'places the robot in the correct position' do
-        coordinates = double
         allow(tabletop).to receive(:valid_placement?).and_return(true)
 
-        robot.place(tabletop, coordinates, 'WEST')
+        robot.place(tabletop, coordinates, West)
 
         expect(robot.position).to be(coordinates)
       end
 
       it 'faces the robot in the correct direction' do
-        coordinates = double
         allow(tabletop).to receive(:valid_placement?).and_return(true)
 
-        robot.place(tabletop, coordinates, 'SOUTH')
+        robot.place(tabletop, coordinates, South)
 
-        expect(robot.direction).to be('SOUTH')
+        expect(robot.direction).to be(South)
       end
     end
 
     context 'when invalid placement' do
       it 'ignores the command' do
-        coordinates = double
         allow(tabletop).to receive(:valid_placement?).and_return(false)
 
-        robot.place(tabletop, coordinates, 'SOUTH')
+        robot.place(tabletop, coordinates, South)
 
         expect(robot.tabletop).to be_nil
       end
@@ -67,11 +64,15 @@ RSpec.describe Robot do
   end
 
   context 'when the robot has been placed' do
+    # TODO: Change this to build a placed robot and not fudge it.
     before do
+      allow(tabletop).to receive(:height).and_return(5)
+      allow(tabletop).to receive(:width).and_return(5)
       allow(tabletop).to receive(:valid_placement?).and_return(true)
-      coordinates = double
+      allow(coordinates).to receive(:y_coordinate).and_return(2)
+      allow(coordinates).to receive(:x_coordinate).and_return(1)
       allow(coordinates).to receive(:to_s).and_return('1,2')
-      robot.place(tabletop, coordinates, 'NORTH')
+      robot.place(tabletop, coordinates, North)
     end
 
     describe '#placed?' do
@@ -87,19 +88,32 @@ RSpec.describe Robot do
     end
 
     describe '#move' do
-      it 'checks with the board to see if the move is valid' do
-        # robot.move
+      it 'checks if the move is valid' do
+        new_position = double
+        allow(coordinates).to receive(:move).and_return(new_position)
+
+        robot.move
+
+        expect(tabletop).to have_received(:valid_placement?).with(new_position)
       end
 
-      # rubocop:disable RSpec/NestedGroups
-      context 'when move is valid' do
-        it 'moves forward in the direction it was facing 1 place'
+      it 'changes the robots position' do
+        new_position = double
+        allow(coordinates).to receive(:move).and_return(new_position)
+
+        expect { robot.move }.to change(robot, :position).to(new_position)
       end
 
-      context 'when move is invalid' do
-        it 'ignores the command'
-      end
-      # rubocop:enable RSpec/NestedGroups
+      # TODO: Fix this as not actually testing the correct thing.
+      # xcontext 'when move is invalid' do
+      #   before do
+      #     allow(tabletop).to receive(:valid_placement?).and_return(false)
+      #   end
+
+      #   xit 'ignores the command' do
+      #     expect { robot.move }.not_to change(robot, :position)
+      #   end
+      # end
     end
   end
 
@@ -111,13 +125,15 @@ RSpec.describe Robot do
     end
 
     describe '#report' do
-      xit 'ignores the command' do
+      it 'ignores the command' do
         expect(robot.report).to eq(nil)
       end
     end
 
     describe '#move' do
-      it 'ignores the command'
+      it 'ignores the command' do
+        expect { robot.move }.not_to change(robot, :position)
+      end
     end
   end
 

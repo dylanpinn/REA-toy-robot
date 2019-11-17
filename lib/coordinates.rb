@@ -20,4 +20,9 @@ class Coordinates
   def to_s
     "#{@x_coordinate},#{y_coordinate}"
   end
+
+  def move(direction)
+    self.class.new(x_coordinate + direction::X_MOVE,
+                   y_coordinate + direction::Y_MOVE)
+  end
 end
