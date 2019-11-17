@@ -66,7 +66,7 @@ RSpec.describe Robot do
   end
 
   context 'when the robot has been placed' do
-    # TODO: Change this to build a placed robot and not fudge it.
+    # NOTE: Could look at replacing this with a Factory to build out.
     before do
       allow(tabletop).to receive(:height).and_return(5)
       allow(tabletop).to receive(:width).and_return(5)
@@ -106,17 +106,6 @@ RSpec.describe Robot do
 
         expect { robot.move }.to change(robot, :position).to(new_position)
       end
-
-      # TODO: Fix this as not actually testing the correct thing.
-      # xcontext 'when move is invalid' do
-      #   before do
-      #     allow(tabletop).to receive(:valid_placement?).and_return(false)
-      #   end
-
-      #   xit 'ignores the command' do
-      #     expect { robot.move }.not_to change(robot, :position)
-      #   end
-      # end
     end
 
     describe '#right' do

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'direction'
+
 # rubocop:disable RSpec/MultipleDescribes
 RSpec.describe North do
   describe '.right' do
